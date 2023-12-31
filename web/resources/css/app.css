@@ -1,0 +1,50 @@
+@tailwind base;
+:root {
+    --color-gray: #f2f2f2;
+    --color-med-gray: #d9d9d9;
+    --color-dark-gray: #6b6b6b;
+    --color-gold: #e8c39c;
+    --color-light: white;
+    --color-dark: #1e1e1e;
+
+    --bg-base: var(--color-gray);
+    --color-base: var(--color-dark-gray);
+
+    color: var(--color-base);
+}
+
+h2 {
+    @apply text-gray-800 mb-6;
+    font-size: 1.25rem;
+    font-family: "Kumar One", display;
+
+    @screen md {
+        font-size: 2rem;
+    }
+}
+
+h3 {
+    @apply text-gray-800 mb-3;
+    font-size: 1.125rem;
+    font-family: "Kumar One", display;
+}
+
+h4 {
+    @apply text-gray-800 font-black text-lg;
+}
+
+@tailwind components;
+.container {
+    max-width: 895px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 32px;
+    padding-right: 32px;
+
+    @screen lg {
+        padding-left: unset;
+        padding-right: unset;
+    }
+}
+
+@tailwind utilities;
