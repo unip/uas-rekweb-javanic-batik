@@ -47,4 +47,37 @@ h4 {
     }
 }
 
+.btn-primary {
+    @apply inline-block text-gray-800 bg-[var(--color-gold)] hover:brightness-90 px-5 py-3 transition duration-300;
+}
+
+input,
+select {
+    @apply h-[60px];
+}
+
+input,
+select,
+textarea {
+    @apply bg-white px-[26px] py-[17px] transition duration-300 border border-transparent appearance-none;
+    @apply hover:border-b-gray-800;
+    @apply focus:outline-none focus:border-yellow-500;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1),
+        0px 7px 7px 0px rgba(0, 0, 0, 0.09),
+        0px 16px 10px 0px rgba(0, 0, 0, 0.05),
+        0px 29px 12px 0px rgba(0, 0, 0, 0.01),
+        0px 45px 13px 0px rgba(0, 0, 0, 0);
+}
+
+select {
+    background-image: url(/images/icon-chevron-down.svg);
+    background-repeat: no-repeat;
+    background-position: right 26px center;
+}
+
 @tailwind utilities;

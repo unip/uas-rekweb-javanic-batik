@@ -36,7 +36,7 @@
                 <div class="caption absolute bottom-0 left-0 p-5 mb-8">
                   <p class="title font-black text-gray-800 text-[32px]">Promo Akhir Tahun</p>
                   <p class="font-['Kumar_One'] text-white text-[40px]">Discount 50%</p>
-                  <p class="text-gray-800">Untuk 10 PO pertama di bulan Desember</p>
+                  <p class="text-gray-800">Untuk 10 order pertama di bulan Desember</p>
                 </div>
               </div>
             @endfor
@@ -75,6 +75,7 @@
       loop: true,
       autoplay: {
         delay: 5000,
+        pauseOnMouseEnter: true,
       },
       pagination: {
         el: '#headerSlider .swiper-pagination',
@@ -88,6 +89,7 @@
       loop: true,
       autoplay: {
         delay: 2000,
+        pauseOnMouseEnter: true,
       },
 
       // Navigation arrows

@@ -1,7 +1,7 @@
 {{-- ORDER --}}
 <section class="order">
   <div class="container relative flex flex-col gap-y-10 md:block overflow-hidden md:overflow-visible">
-    <div class="caption max-w-[310px] relative md:absolute top-0 left-0 md:left-[32px]">
+    <div class="caption max-w-[310px] relative md:absolute top-0 left-0 md:left-[32px] lg:left-0">
       <h2 class="text-[48px] leading-[50px]">
         Make your <br>
         own style
@@ -10,7 +10,7 @@
       <p class="mb-3">Dengan kualitas jahitan yang kuat, rapi dan bahan yang nyaman digunakan.</p>
 
       @if ($with_cta)
-        <a href="/order" class="inline-block font-['Kumar_One'] text-gray-800 bg-[var(--color-gold)] hover:brightness-90 px-5 py-3 transition duration-300">
+        <a href="/order" class="btn-primary font-['Kumar_One']">
           Pesan Sekarang
         </a>
       @endif

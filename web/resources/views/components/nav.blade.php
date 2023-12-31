@@ -5,7 +5,7 @@
     </div>
     <div class="container mx-auto">
       <div class="menu-wrapper hidden md:flex justify-end gap-4 uppercase font-black">
-        <a href="/home" @class(['hover:text-gray-800 transition duration-300', 'text-gray-800' => request()->is('/')])>Home</a>
+        <a href="/" @class(['hover:text-gray-800 transition duration-300', 'text-gray-800' => request()->is('/')])>Home</a>
         <a href="/kategori" @class(['hover:text-gray-800 transition duration-300', 'text-gray-800' => request()->is('kategori*')])>Kategori</a>
         <a href="/order" @class(['hover:text-gray-800 transition duration-300', 'text-gray-800' => request()->is('order*')])>Order</a>
         <a href="/kontak" @class(['hover:text-gray-800 transition duration-300', 'text-gray-800' => request()->is('kontak*')])>Kontak</a>
