@@ -25,5 +25,14 @@ class DatabaseSeeder extends Seeder
             'phone' => '12345',
             'role' => 'admin',
         ]);
+
+        User::create([
+            'display_name' => 'Yohanes Crusc',
+            'username' => 'ycrusc',
+            'email' => 'ycrusc@gmail.com',
+            'password' => Hash::make('12345'),
+            'phone' => '12345678',
+            'role' => 'admin',
+        ]);
     }
 }

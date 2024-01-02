@@ -6,11 +6,10 @@ use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use PhpParser\Node\Stmt\Catch_;
 
 class UserController extends Controller
 {
-
-
 
     public function create(Request $request)
     {
@@ -25,12 +24,15 @@ class UserController extends Controller
                 'role' => 'member',
                 'status' => 'aktif'
             ]);
-
-            return response()->json($user);
+            return response()->json([
+                'success' => true,
+                'message' => 'Success create user',
+                'data' => $user
+            ]);
         } catch (Exception $err) {
             return response()->json([
                 'success' => false,
-                'message' => 'Gagal membuat user',
+                'message' => 'Faill create user',
                 'data' => $err->getMessage(),
             ]);
         }
@@ -40,46 +42,64 @@ class UserController extends Controller
     {
         $user = User::all();
 
-        return response()->json($user);
+        return response()->json([
+            'success' => true,
+            'message' => 'Success get ALL user',
+            'data' => $user
+        ]);
     }
 
     public function detail($id)
     {
         $user = User::find($id);
-        return response()->json($user);
+        return response()->json([
+            'success' => true,
+            'message' => 'Success get user',
+            'data' => $user
+        ]);
     }
 
     public function update(Request $req, $id)
     {
-        $user = User::whereId($id)->update([
-            'name' => $req->input('name'),
-            'alamat' => $req->input('alamat')
-        ]);
+        try {
 
-        if ($user) {
+            $user = User::whereId($id)->update([
+                'display_name' => $req->input('display_name'),
+                'role' => $req->input('role'),
+                'status' => $req->input('status')
+            ]);
+            $user = User::whereId($id)->first();
+
             return response()->json([
                 'success' => true,
-                'message' => 'Data berhasil diupdate',
+                'message' => 'Success update user',
                 'data' => $user
             ], 201);
-        } else {
+        } catch (Exception $err) {
             return response()->json([
                 'success' => false,
-                'message' => 'Data gagal diupdate'
-            ], 400);
+                'message' => 'Faill update user',
+                'data' => $err->getMessage(),
+            ]);
         }
     }
 
     public function delete($id)
     {
-        $kategori = User::whereId($id)->first();
-        $kategori->delete();
+        try {
+            $user = User::whereId($id)->first();
+            $user->delete();
 
-        if ($kategori) {
             return response()->json([
                 'success' => true,
                 'message' => 'Data berhasil dihapus'
             ], 200);
+        } catch (Exception $err) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Faill delete user',
+                'data' => $err->getMessage(),
+            ]);
         }
     }
 }
