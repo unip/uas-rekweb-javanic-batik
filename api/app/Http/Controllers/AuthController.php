@@ -17,6 +17,15 @@ class AuthController extends Controller
         $password = $request->input('password');
 
         $user = User::where('email', $email)->first();
+        if (!$user) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Login Faill',
+                'data' => [
+                    'User not found'
+                ]
+            ]);
+        }
 
         if (Hash::check($password, $user->password)) {
             $str = Str::random(40);
