@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Image;
 use App\Models\Kategori;
+use Exception;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -11,58 +11,84 @@ class CategoryController extends Controller
 
     public function create(Request  $request)
     {
-        $data = $request->all();
-        $kategori = Kategori::create($data);
-
-        return response()->json($kategori);
+        try {
+            $data = $request->all();
+            $kategori = Kategori::create($data);
+            return response()->json([
+                'success' => true,
+                'message' => 'Success create kategori',
+                'data' => $kategori
+            ]);
+        } catch (Exception $err) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Faill create kategori',
+                'data' => $err->getMessage(),
+            ]);
+        }
     }
 
     public function index()
     {
         $kategori = Kategori::all();
 
-        return response()->json($kategori);
+        return response()->json([
+            'success' => true,
+            'message' => 'Success get ALL kategori',
+            'data' => $kategori
+        ]);
     }
 
     public function detail($id)
     {
         $kategori = Kategori::find($id);
-        return response()->json($kategori);
+        return response()->json([
+            'success' => true,
+            'message' => 'Success get kategori',
+            'data' => $kategori
+        ]);
     }
 
-    public function update(Request $req, $id)
+    public function update(Request $request, $id)
     {
-        $kategori = Kategori::whereId($id)->update([
-            'nama_kategori' => $req->input('nama_kategori'),
-            'kode_kategori' => $req->input('kode_kategori'),
-            'deskripsi_kategori' => $req->input('deskripsi_kategori'),
-            'status' => $req->input('status'),
-        ]);
+        try {
+            Kategori::whereId($id)->update([
+                'nama_kategori' => $request->input('nama_kategori'),
+                'deskripsi_kategori' => $request->input('deskripsi_kategori'),
+                'status' => $request->input('status'),
+            ]);
+            $kategori = Kategori::whereId($id)->first();
 
-        if ($kategori) {
             return response()->json([
                 'success' => true,
-                'message' => 'Data berhasil diupdate',
+                'message' => 'Success update kategori',
                 'data' => $kategori
             ], 201);
-        } else {
+        } catch (Exception $err) {
             return response()->json([
                 'success' => false,
-                'message' => 'Data gagal diupdate'
-            ], 400);
+                'message' => 'Faill update Kategori',
+                'data' => $err->getMessage(),
+            ]);
         }
     }
 
     public function delete($id)
     {
-        $kategori = Kategori::whereId($id)->first();
-        $kategori->delete();
+        try {
+            $kategori = Kategori::whereId($id)->first();
+            $kategori->delete();
 
-        if ($kategori) {
             return response()->json([
                 'success' => true,
-                'message' => 'Data berhasil dihapus'
+                'message' => 'Kategori berhasil dihapus'
             ], 200);
+        } catch (Exception $err) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Faill delete kategori',
+                'data' => $err->getMessage(),
+            ]);
         }
     }
 }

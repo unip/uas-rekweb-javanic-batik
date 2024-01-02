@@ -14,9 +14,4 @@ class Kategori extends Model
         'status',
         'foto',
     ];
-
-    public function user()
-    {
-        return $this->belongsTo('App\User', 'user_id');
-    }
 }

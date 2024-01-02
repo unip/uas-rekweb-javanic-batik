@@ -28,7 +28,7 @@ $router->group(['middleware' => 'basicAuth'], function () use ($router) {
     $router->put('/produk/delete/{id}', 'ProdukController@delete');
 
     $router->post('/kategori', 'CategoryController@create');
-    $router->put('/kategori/update/{id}', 'CategoryController@update');
+    $router->post('/kategori/update/{id}', 'CategoryController@update');
     $router->put('/kategori/delete/{id}', 'CategoryController@delete');
 });
 
