@@ -17,7 +17,8 @@ class UserController extends Controller
         try {
             $data = $request->all();
             $user = User::create([
-                'name' => $data['name'],
+                'display_name' => $data['display_name'],
+                'username' => $data['username'],
                 'email' => $data['email'],
                 'password' => Hash::make($data['password']),
                 'phone' => $data['phone'],

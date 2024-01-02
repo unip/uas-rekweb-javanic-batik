@@ -15,13 +15,12 @@ class CreateUser extends Migration
     {
         Schema::create('user', function (Blueprint $table) {
             $table->id();
+            $table->string('display_name');
             $table->string('username')->unique();
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('phone');
-            $table->string('alamat')->nullable();
+            $table->string('phone')->unique()->nullable();
             $table->string('role')->default('member');
-            $table->string('foto')->nullable();
             $table->string('status')->default('aktif');
             $table->string('api_token')->nullable();
             $table->timestamps();

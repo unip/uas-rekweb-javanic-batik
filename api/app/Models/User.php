@@ -9,15 +9,9 @@ class User extends Model
 
     protected $table = 'user';
 
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'phone',
-        'alamat',
-        'role',
-        'foto',
-        'status'
+    protected $guarded = [
+        'id',
+        'api_token'
     ];
 
     /**
