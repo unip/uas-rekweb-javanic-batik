@@ -34,7 +34,7 @@ class AuthController extends Controller
             $bearer = 'bearer ';
             $tokenBearer = $bearer . '' . $token;
 
-            $user->update([
+            User::where('email', $email)->update([
                 'api_token' => $token
             ]);
             return response()->json([
