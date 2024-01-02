@@ -17,13 +17,14 @@ class AuthController extends Controller
         $password = $request->input('password');
 
         $user = User::where('email', $email)->first();
+
+        // dd($user);
+
         if (!$user) {
             return response()->json([
                 'success' => false,
-                'message' => 'Login Faill',
-                'data' => [
-                    'User not found'
-                ]
+                'message' => 'Login Failed',
+                'data' => null
             ]);
         }
 
@@ -33,7 +34,7 @@ class AuthController extends Controller
             $bearer = 'bearer ';
             $tokenBearer = $bearer . '' . $token;
 
-            User::where('email', $email)->update([
+            $user->update([
                 'api_token' => $token
             ]);
             return response()->json([
@@ -47,10 +48,8 @@ class AuthController extends Controller
         } else {
             return response()->json([
                 'success' => false,
-                'message' => 'Login Faill',
-                'data' => [
-                    ''
-                ]
+                'message' => 'Login Failed',
+                'data' => null,
             ]);
         }
     }
