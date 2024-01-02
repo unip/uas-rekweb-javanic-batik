@@ -72,12 +72,12 @@ $app->configure('app');
 |
 */
 
-$app->middleware([
-    App\Http\Middleware\BasicAuthMiddleware::class
-]);
+// $app->middleware([
+//     App\Http\Middleware\BasicAuthMiddleware::class
+// ]);
 
 $app->routeMiddleware([
-    'basicAuth' => App\Http\Middleware\BasicAuthMiddleware::class,
+    'basicAuth' => App\Http\Middleware\Authenticate::class,
 ]);
 
 /*
