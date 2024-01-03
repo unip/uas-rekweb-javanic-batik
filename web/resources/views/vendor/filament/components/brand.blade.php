@@ -1,0 +1,1 @@
+<img src="{{ asset('/images/logo-javanic-gold.svg') }}" alt="Logo" class="h-10">

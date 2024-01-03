@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -88,3 +90,11 @@ Route::get('/order', function () {
 Route::get('/kontak', function () {
     return view('pages.kontak', ['title' => 'Hubungi Kami']);
 })->name('kontak');
+
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('login', [AuthController::class, 'index'])->name('login.index');
+    Route::post('login', [AuthController::class, 'store'])->name('login.store');
+    Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+
+    Route::get('dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+});
