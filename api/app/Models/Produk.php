@@ -24,13 +24,4 @@ class Produk extends Model
     {
         return $this->belongsTo('App\Models\Kategori', 'kategori_id');
     }
-
-    // public function photo()
-    // {
-    //     return $this->hasMany(ProdukImage::class);
-    // }
-    // public function promo()
-    // {
-    //     return $this->hasOne('App\Models\ProdukPromo', 'produk_id');
-    // }
 }

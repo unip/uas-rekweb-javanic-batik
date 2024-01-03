@@ -67,13 +67,10 @@ class OrderController extends Controller
     {
         try {
             Order::whereId($id)->update([
-                'nama_produk' => $req->input('nama_produk'),
-                'kategori_id' => $req->input('kategori_id'),
-                'satuan' => $req->input('satuan'),
-                'harga' => $req->input('harga'),
-                'qty' => $req->input('qty'),
-                'status' => $req->input('status'),
-                'deskripsi_produk' => $req->input('deskripsi_produk'),
+                'no_resi' => $req->input('no_resi'),
+                'ekspedisi' => $req->input('ekspedisi'),
+                'status_pembayaran' => $req->input('status_pembayaran'),
+
             ]);
             $order = Order::whereId($id)->first();
 
@@ -108,5 +105,16 @@ class OrderController extends Controller
                 'data' => $err->getMessage(),
             ]);
         }
+    }
+
+    public function getByPhone(Request $request)
+    {
+        $phone = $request->input('phone');
+        $order = Order::where('phone', $phone)->get();
+        return response()->json([
+            'success' => true,
+            'message' => 'Success get Order',
+            'data' => $order
+        ]);
     }
 }

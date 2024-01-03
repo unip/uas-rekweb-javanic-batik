@@ -37,6 +37,10 @@ $router->group(['middleware' => 'basicAuth'], function () use ($router) {
     $router->put('/order/update/{id}', 'OrderController@update');
     $router->put('/order/delete/{id}', 'OrderController@delete');
     $router->get('/order', 'OrderController@index');
+
+    $router->get('/pesan/detail/{id}', 'PesanController@detail');
+    $router->put('/pesan/delete/{id}', 'PesanController@delete');
+    $router->get('/pesan', 'PesanController@index');
 });
 
 $router->post('/user', 'UserController@create');
@@ -50,9 +54,6 @@ $router->get('/kategori', 'CategoryController@index');
 $router->post('/login', 'AuthController@login');
 
 $router->post('/order', 'OrderController@create');
+$router->post('/order/phone', 'OrderController@getByPhone');
 
-$router->get('/message/detail/{id}', 'UserController@detail');
-$router->put('/message/update/{id}', 'UserController@update');
-$router->put('/message/delete/{id}', 'UserController@delete');
-$router->get('/message', 'UserController@index');
-$router->post('/message', 'UserController@create');
+$router->post('/pesan', 'PesanController@create');
