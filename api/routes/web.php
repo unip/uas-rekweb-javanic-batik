@@ -30,6 +30,13 @@ $router->group(['middleware' => 'basicAuth'], function () use ($router) {
     $router->post('/kategori', 'CategoryController@create');
     $router->post('/kategori/update/{id}', 'CategoryController@update');
     $router->put('/kategori/delete/{id}', 'CategoryController@delete');
+
+    $router->post('/logout', 'AuthController@logout');
+
+    $router->get('/order/detail/{id}', 'OrderController@detail');
+    $router->put('/order/update/{id}', 'OrderController@update');
+    $router->put('/order/delete/{id}', 'OrderController@delete');
+    $router->get('/order', 'OrderController@index');
 });
 
 $router->post('/user', 'UserController@create');
@@ -41,4 +48,11 @@ $router->get('/kategori/detail/{id}', 'CategoryController@detail');
 $router->get('/kategori', 'CategoryController@index');
 
 $router->post('/login', 'AuthController@login');
-$router->post('/logout', 'AuthController@logout');
+
+$router->post('/order', 'OrderController@create');
+
+$router->get('/message/detail/{id}', 'UserController@detail');
+$router->put('/message/update/{id}', 'UserController@update');
+$router->put('/message/delete/{id}', 'UserController@delete');
+$router->get('/message', 'UserController@index');
+$router->post('/message', 'UserController@create');

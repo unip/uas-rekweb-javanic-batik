@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class order extends Model
+class Order extends Model
 {
     protected $table = 'order';
     protected $fillable = [
@@ -20,6 +20,7 @@ class order extends Model
         'ongkir',
         'jumlah_pesanan',
         'total',
+        'nama',
     ];
 
     public function produk()

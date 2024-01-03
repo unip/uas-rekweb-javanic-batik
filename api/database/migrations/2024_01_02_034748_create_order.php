@@ -18,6 +18,8 @@ class CreateOrder extends Migration
             $table->string('no_invoice');
             $table->string('email');
             $table->string('phone');
+            $table->string('nama');
+            $table->string('alamat');
             $table->string('status_pembayaran')->default('Belum Bayar');
             $table->string('no_resi')->nullable();
             $table->BigInteger('produk_id')->unsigned();
