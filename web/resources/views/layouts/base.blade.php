@@ -15,6 +15,8 @@
   <link href="https://fonts.bunny.net/css?family=kumar-one:400|nunito-sans:300,300i,900" rel="stylesheet" />
 
   @yield('css')
+
+  @yield('js_header')
 </head>
 <body class="font-['Nunito Sans'] bg-[var(--bg-base)]">
   @yield('child')

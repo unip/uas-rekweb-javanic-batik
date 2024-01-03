@@ -8,6 +8,12 @@
     
 @endsection
 
+@section('js_header')
+
+  @yield('scripts_header')
+    
+@endsection
+
 @section('child')
   @include('components.nav')
 

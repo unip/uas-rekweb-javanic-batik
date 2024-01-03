@@ -28,7 +28,7 @@ class CreateOrder extends Migration
             $table->double('subtotal', 12, 2)->default(0);
             $table->double('ongkir', 12, 2)->default(0);
             $table->double('total', 12, 2)->default(0);
-            $table->foreign('produk_id')->references('id')->on('produk');
+            $table->foreign('produk_id')->references('id')->on('produk')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }
