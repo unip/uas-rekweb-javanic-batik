@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AuthController;
+use App\Http\Middleware\CheckAuthToken;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -94,7 +95,10 @@ Route::get('/kontak', function () {
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('login', [AuthController::class, 'index'])->name('login.index');
     Route::post('login', [AuthController::class, 'store'])->name('login.store');
-    Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
-    Route::get('dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+    Route::middleware(CheckAuthToken::class)->group(function () {
+        Route::get('dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+
+        Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+    });
 });
