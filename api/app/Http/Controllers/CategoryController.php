@@ -12,8 +12,28 @@ class CategoryController extends Controller
     public function create(Request  $request)
     {
         try {
-            $data = $request->all();
-            $kategori = Kategori::create($data);
+
+            $this->validate($request, ['foto' => 'image|mimes:jpeg,png,jpg,gif|max:2048']);
+
+            $user = (object) ['foto' => ""];
+
+            $original_filename = $request->file('foto')->getClientOriginalName();
+            $original_filename_arr = explode('.', $original_filename);
+            $file_ext = end($original_filename_arr);
+            $destination_path = './upload/kategori/';
+            $image = 'C-' . time() . '.' . $file_ext;
+
+            $request->file('foto')->move($destination_path, $image);
+            $user->image = '/upload/kategori/' . $image;
+
+            $kategori = Kategori::create([
+                'nama_kategori' => $request->input('nama_kategori'),
+                'deskripsi_kategori' => $request->input('deskripsi_kategori'),
+                'status' => $request->input('status'),
+                'foto' => $user->image,
+                'kode_kategori' => $request->input('kode_kategori'),
+            ]);
+
             return response()->json([
                 'success' => true,
                 'message' => 'Success create kategori',
@@ -52,10 +72,25 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     {
         try {
+
+            $this->validate($request, ['foto' => 'image|mimes:jpeg,png,jpg,gif|max:2048']);
+
+            $user = (object) ['foto' => ""];
+
+            $original_filename = $request->file('foto')->getClientOriginalName();
+            $original_filename_arr = explode('.', $original_filename);
+            $file_ext = end($original_filename_arr);
+            $destination_path = './upload/kategori/';
+            $image = 'U-' . time() . '.' . $file_ext;
+
+            $request->file('foto')->move($destination_path, $image);
+            $user->image = '/upload/kategori/' . $image;
+
             Kategori::whereId($id)->update([
                 'nama_kategori' => $request->input('nama_kategori'),
                 'deskripsi_kategori' => $request->input('deskripsi_kategori'),
                 'status' => $request->input('status'),
+                'foto' => $user->image
             ]);
             $kategori = Kategori::whereId($id)->first();
 

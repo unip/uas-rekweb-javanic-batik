@@ -24,7 +24,7 @@ class CreateProduk extends Migration
             $table->string('satuan');
             $table->double('harga', 12, 2)->default(0);
             $table->string('status');
-            $table->foreign('kategori_id')->references('id')->on('category');
+            $table->foreign('kategori_id')->references('id')->on('category')->onDelete('cascade');
             $table->timestamps();
         });
     }

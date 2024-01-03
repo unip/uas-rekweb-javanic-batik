@@ -113,3 +113,20 @@ $app->router->group([
 });
 
 return $app;
+
+$app->configure('filesystems');
+
+if (!function_exists('public_path')) {
+    /**
+     * Dapatkan path publik.
+     *
+     * @param  string  $path
+     * @return string
+     */
+    function public_path($path = '')
+    {
+        return rtrim(app()->basePath('public/' . $path), '/');
+    }
+}
+
+symlink(storage_path('app/public'), public_path('storage'));
