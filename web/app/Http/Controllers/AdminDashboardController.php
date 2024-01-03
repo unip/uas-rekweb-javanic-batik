@@ -16,8 +16,8 @@ class AdminDashboardController extends Controller
 
         $data = [
             'title' => 'Dashboard',
-            'orders' => $orders['data'],
-            'products' => $products['data'],
+            'orders' => collect($orders['data']),
+            'products' => collect($products['data']),
         ];
 
         return view('pages.admin.dashboard', $data);
