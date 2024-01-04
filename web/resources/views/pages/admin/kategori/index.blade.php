@@ -1,7 +1,11 @@
 @extends('layouts.admin')
 
 @section('content')
-    <h3>{{ $title }}</h3>
+    <div class="flex items-center border-b border-b-gray-300 pb-5 mb-5">
+        <h3 class="mb-0">{{ $title }}</h3>
+        <a href="{{ route('admin.categories.create') }}" class="btn-primary ml-auto">+
+            Kategori</a>
+    </div>
 
     <div x-data="{ deleteConfirm: false, id: null, name: null }" class="table-kategori h-full flex">
         @if ($categories->count() === 0)
@@ -32,7 +36,7 @@
                         @foreach ($categories->all() as $item)
                             <tr
                                 class="border-b border-b-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition duration-200">
-                                <td class="p-3">
+                                <td class="p-3 w-max">
                                     <img src="http://localhost:8005{{ $item['foto'] }}" alt=""
                                         class="w-[60px] aspect-square">
                                 </td>
@@ -51,15 +55,14 @@
                                 <td class="p-3">
                                     <span class="bg-green-100 px-3 py-1 rounded-full">{{ $item['status'] }}</span>
                                 </td>
-                                <td class="p-3 dark:text-white">
+                                <td class="p-3">
                                     {{ \Carbon\Carbon::parse($item['created_at'])->format('d M Y') }}
                                 </td>
-                                <td class="p-3 dark:text-white">
+                                <td class="p-3">
                                     {{ \Carbon\Carbon::parse($item['updated_at'])->format('d M Y') }}
                                 </td>
-                                <td class="p-3 dark:text-white">
-                                    <button class="bg-red-400 text-white p-3 hover:bg-red-600"
-                                        class="bg-red-400 text-white p-3 hover:bg-red-600"
+                                <td class="p-3">
+                                    <button class="bg-gray-700 text-white p-3 hover:bg-gray-900"
                                         @click="deleteConfirm = true; id = {{ $item['id'] }}; name = `{{ $item['nama_kategori'] }}`">delete</button>
                                 </td>
                             </tr>
@@ -90,7 +93,7 @@
                 </div>
 
                 <!-- content -->
-                <form action="{{ route('admin.categories.destroy', ['category' => $item['id']]) }}">
+                <form action="{{ route('admin.categories.destroy', ['category' => $item['id']]) }}" method="POST">
                     @csrf @method('delete')
                     <p class="mt-4 mb-3">Kategori <span x-text="name"></span> akan dihapus. Boleh?</p>
 

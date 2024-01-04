@@ -1126,6 +1126,10 @@ select {
   margin-top: 30px;
 }
 
+.mt-auto {
+  margin-top: auto;
+}
+
 .block {
   display: block;
 }
@@ -1342,6 +1346,11 @@ select {
 
 .w-screen {
   width: 100vw;
+}
+
+.w-min {
+  width: -moz-min-content;
+  width: min-content;
 }
 
 .max-w-2xl {
@@ -1849,6 +1858,10 @@ select {
   border-width: 1px;
 }
 
+.\!border {
+  border-width: 1px !important;
+}
+
 .border-b {
   border-bottom-width: 1px;
 }
@@ -1889,6 +1902,11 @@ select {
   border-color: transparent;
 }
 
+.\!border-gray-400 {
+  --tw-border-opacity: 1 !important;
+  border-color: rgb(156 163 175 / var(--tw-border-opacity)) !important;
+}
+
 .border-b-\[var\(--color-dark-gray\)\] {
   border-bottom-color: var(--color-dark-gray);
 }
@@ -1901,6 +1919,11 @@ select {
 .border-b-slate-300 {
   --tw-border-opacity: 1;
   border-bottom-color: rgb(203 213 225 / var(--tw-border-opacity));
+}
+
+.border-b-gray-500 {
+  --tw-border-opacity: 1;
+  border-bottom-color: rgb(107 114 128 / var(--tw-border-opacity));
 }
 
 .bg-\[var\(--bg-base\)\] {
@@ -1990,6 +2013,16 @@ select {
 .bg-yellow-500 {
   --tw-bg-opacity: 1;
   background-color: rgb(234 179 8 / var(--tw-bg-opacity));
+}
+
+.bg-gray-700 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(55 65 81 / var(--tw-bg-opacity));
+}
+
+.bg-green-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(74 222 128 / var(--tw-bg-opacity));
 }
 
 .bg-opacity-50 {
@@ -2224,6 +2257,10 @@ select {
 
 .pt-8 {
   padding-top: 2rem;
+}
+
+.pb-5 {
+  padding-bottom: 1.25rem;
 }
 
 .text-left {
@@ -2559,6 +2596,20 @@ select {
   flex-direction: column;
 }
 
+.file\:bg-yellow-500::file-selector-button {
+  --tw-bg-opacity: 1;
+  background-color: rgb(234 179 8 / var(--tw-bg-opacity));
+}
+
+.file\:p-5::file-selector-button {
+  padding: 1.25rem;
+}
+
+.file\:text-yellow-900::file-selector-button {
+  --tw-text-opacity: 1;
+  color: rgb(113 63 18 / var(--tw-text-opacity));
+}
+
 .after\:content-none::after {
   --tw-content: none;
   content: var(--tw-content);
@@ -2594,6 +2645,16 @@ select {
 .hover\:bg-slate-200:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(226 232 240 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-gray-900:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(17 24 39 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-green-500:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(34 197 94 / var(--tw-bg-opacity));
 }
 
 .hover\:text-gray-800:hover {
@@ -3043,6 +3104,10 @@ select {
     width: auto;
   }
 
+  .md\:w-2\/3 {
+    width: 66.666667%;
+  }
+
   .md\:max-w-\[680px\] {
     max-width: 680px;
   }
@@ -3287,6 +3352,10 @@ select {
 
   .lg\:hidden {
     display: none;
+  }
+
+  .lg\:w-1\/2 {
+    width: 50%;
   }
 
   .lg\:max-w-\[var\(--collapsed-sidebar-width\)\] {
