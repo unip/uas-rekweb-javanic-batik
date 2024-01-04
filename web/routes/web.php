@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Middleware\CheckAuthToken;
 use Illuminate\Support\Facades\Route;
 
@@ -98,6 +99,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::middleware(CheckAuthToken::class)->group(function () {
         Route::get('dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+        Route::resource('categories', CategoryController::class);
 
         Route::post('logout', [AuthController::class, 'logout'])->name('logout');
     });
