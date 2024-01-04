@@ -61,11 +61,11 @@ class CategoryController extends Controller
 
         // dd($res->json());
 
-        // if (!$res->json()['success']) {
-        //     return back()->with('error', 'Gagal membuat kategori');
-        // }
+        if (!$res->json()['success']) {
+            return back()->with('error', 'Gagal membuat kategori');
+        }
 
-        // return redirect()->route('admin.categories.index')->with('success', 'Berhasil membuat kategori');
+        return redirect()->route('admin.categories.index')->with('success', 'Berhasil membuat kategori');
     }
 
     /**
@@ -87,7 +87,18 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $kategori = Http::withToken(session('token'))->get('http://localhost:8005/kategori/detail/' . $id);
+
+        if (!$kategori->json()['success']) {
+            return redirect()->route('admin.categories.index')->with('error', 'Gagal membuka kategori');
+        }
+
+        $data = [
+            'title' => 'Update Kategori Produk',
+            'kategori' => $kategori->json()['data'],
+        ];
+
+        return view('pages.admin.kategori.update', $data);
     }
 
     /**
@@ -99,7 +110,23 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validated = $request->validate([
+            'kode_kategori' => 'required',
+            'nama_kategori' => 'required',
+            'deskripsi_kategori' => 'nullable',
+            'status' => 'nullable',
+            'foto' => 'nullable',
+        ]);
+
+        $kategori = Http::withToken(session('token'))->get('http://localhost:8005/kategori/update/' . $id, $validated);
+
+        dd($kategori->json());
+
+        if (!$kategori->json()['success']) {
+            return back()->with('error', 'Gagal update kategori');
+        }
+
+        return redirect()->route('admin.categories.index')->with('success', 'Berhasil membuat kategori');
     }
 
     /**
@@ -110,12 +137,12 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        try {
-            $res = Http::withToken(session('token'))->put('http://localhost:8005/kategori/delete/' . $id);
+        $res = Http::withToken(session('token'))->put('http://localhost:8005/kategori/delete/' . $id);
 
-            return back()->with('success', 'Sukses menghapus kategori');
-        } catch (Exception $err) {
+        if (!$res->json()['success']) {
             return back()->with('error', 'Gagal menghapus kategori');
         }
+
+        return back()->with('success', 'Sukses menghapus kategori');
     }
 }

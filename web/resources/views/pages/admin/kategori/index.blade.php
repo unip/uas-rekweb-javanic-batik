@@ -7,7 +7,7 @@
             Kategori</a>
     </div>
 
-    <div x-data="{ deleteConfirm: false, id: null, name: null }" class="table-kategori h-full flex">
+    <div x-data="{ deleteConfirm: false, id: null, name: null, action: null }" class="table-kategori h-full flex">
         @if ($categories->count() === 0)
             <div class="maaf bg-white p-5 flex-1 flex flex-col items-center justify-center">
                 <h3>Kategori Masih Kosong</h3>
@@ -34,11 +34,10 @@
                     </thead>
                     <tbody>
                         @foreach ($categories->all() as $item)
-                            <tr
-                                class="border-b border-b-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition duration-200">
+                            <tr class="border-b border-b-slate-300 hover:bg-slate-200 transition duration-200">
                                 <td class="p-3 w-max">
-                                    <img src="http://localhost:8005{{ $item['foto'] }}" alt=""
-                                        class="w-[60px] aspect-square">
+                                    <img src="{{ $item['foto'] ? 'http://localhost:8005' . $item['foto'] : asset('/images/thumb-placeholder.png') }}"
+                                        alt="" class="w-[60px] aspect-square">
                                 </td>
                                 <td class="p-3 font-bold">
                                     <a href="{{ route('admin.categories.edit', ['category' => $item['id']]) }}"
@@ -63,7 +62,7 @@
                                 </td>
                                 <td class="p-3">
                                     <button class="bg-gray-700 text-white p-3 hover:bg-gray-900"
-                                        @click="deleteConfirm = true; id = {{ $item['id'] }}; name = `{{ $item['nama_kategori'] }}`">delete</button>
+                                        @click="deleteConfirm = true; id = `{{ $item['id'] }}`; name = `{{ $item['nama_kategori'] }}`; action = `{{ route('admin.categories.destroy', ['category' => $item['id']]) }}`">delete</button>
                                 </td>
                             </tr>
                         @endforeach
@@ -93,9 +92,10 @@
                 </div>
 
                 <!-- content -->
-                <form action="{{ route('admin.categories.destroy', ['category' => $item['id']]) }}" method="POST">
+                <form :action="action" method="POST">
                     @csrf @method('delete')
-                    <p class="mt-4 mb-3">Kategori <span x-text="name"></span> akan dihapus. Boleh?</p>
+                    <p class="mt-4 mb-3">Kategori <span x-text="name"></span> (ID: <span x-text="id"></span>) akan
+                        dihapus. Boleh?</p>
 
                     <div class="flex w-full gap-5 *:flex-1">
                         <button type="button" class="p-3" @click="deleteConfirm = false">Tidak</button>
