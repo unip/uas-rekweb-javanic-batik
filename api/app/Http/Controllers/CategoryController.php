@@ -13,26 +13,35 @@ class CategoryController extends Controller
     {
         try {
 
-            $this->validate($request, ['foto' => 'image|mimes:jpeg,png,jpg,gif|max:2048']);
+            if ($request->file('foto') != null) {
+                $this->validate($request, ['foto' => 'image|mimes:jpeg,png,jpg,gif|max:2048']);
 
-            $user = (object) ['foto' => ""];
+                $user = (object) ['foto' => ""];
 
-            $original_filename = $request->file('foto')->getClientOriginalName();
-            $original_filename_arr = explode('.', $original_filename);
-            $file_ext = end($original_filename_arr);
-            $destination_path = './upload/kategori/';
-            $image = 'C-' . time() . '.' . $file_ext;
+                $original_filename = $request->file('foto')->getClientOriginalName();
+                $original_filename_arr = explode('.', $original_filename);
+                $file_ext = end($original_filename_arr);
+                $destination_path = './upload/kategori/';
+                $image = 'C-' . time() . '.' . $file_ext;
 
-            $request->file('foto')->move($destination_path, $image);
-            $user->image = '/upload/kategori/' . $image;
+                $request->file('foto')->move($destination_path, $image);
+                $user->image = '/upload/kategori/' . $image;
 
-            $kategori = Kategori::create([
-                'nama_kategori' => $request->input('nama_kategori'),
-                'deskripsi_kategori' => $request->input('deskripsi_kategori'),
-                'status' => $request->input('status'),
-                'foto' => $user->image,
-                'kode_kategori' => $request->input('kode_kategori'),
-            ]);
+                $kategori = Kategori::create([
+                    'nama_kategori' => $request->input('nama_kategori'),
+                    'deskripsi_kategori' => $request->input('deskripsi_kategori'),
+                    'status' => $request->input('status'),
+                    'foto' => $user->image,
+                    'kode_kategori' => $request->input('kode_kategori'),
+                ]);
+            } else {
+                $kategori = Kategori::create([
+                    'nama_kategori' => $request->input('nama_kategori'),
+                    'deskripsi_kategori' => $request->input('deskripsi_kategori'),
+                    'status' => $request->input('status'),
+                    'kode_kategori' => $request->input('kode_kategori'),
+                ]);
+            }
 
             return response()->json([
                 'success' => true,
