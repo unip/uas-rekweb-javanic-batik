@@ -81,27 +81,37 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     {
         try {
+            if ($request->file('foto') != null) {
+                $this->validate($request, ['foto' => 'image|mimes:jpeg,png,jpg,gif|max:2048']);
 
-            $this->validate($request, ['foto' => 'image|mimes:jpeg,png,jpg,gif|max:2048']);
+                $user = (object) ['foto' => ""];
 
-            $user = (object) ['foto' => ""];
+                $original_filename = $request->file('foto')->getClientOriginalName();
+                $original_filename_arr = explode('.', $original_filename);
+                $file_ext = end($original_filename_arr);
+                $destination_path = './upload/kategori/';
+                $image = 'U-' . time() . '.' . $file_ext;
 
-            $original_filename = $request->file('foto')->getClientOriginalName();
-            $original_filename_arr = explode('.', $original_filename);
-            $file_ext = end($original_filename_arr);
-            $destination_path = './upload/kategori/';
-            $image = 'U-' . time() . '.' . $file_ext;
+                $request->file('foto')->move($destination_path, $image);
+                $user->image = '/upload/kategori/' . $image;
 
-            $request->file('foto')->move($destination_path, $image);
-            $user->image = '/upload/kategori/' . $image;
+                Kategori::whereId($id)->update([
+                    'nama_kategori' => $request->input('nama_kategori'),
+                    'deskripsi_kategori' => $request->input('deskripsi_kategori'),
+                    'status' => $request->input('status'),
+                    'foto' => $user->image
+                ]);
 
-            Kategori::whereId($id)->update([
-                'nama_kategori' => $request->input('nama_kategori'),
-                'deskripsi_kategori' => $request->input('deskripsi_kategori'),
-                'status' => $request->input('status'),
-                'foto' => $user->image
-            ]);
-            $kategori = Kategori::whereId($id)->first();
+                $kategori = Kategori::whereId($id)->first();
+            } else {
+                Kategori::whereId($id)->update([
+                    'nama_kategori' => $request->input('nama_kategori'),
+                    'deskripsi_kategori' => $request->input('deskripsi_kategori'),
+                    'status' => $request->input('status')
+                ]);
+
+                $kategori = Kategori::whereId($id)->first();
+            }
 
             return response()->json([
                 'success' => true,

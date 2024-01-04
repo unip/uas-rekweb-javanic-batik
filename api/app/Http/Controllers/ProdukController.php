@@ -13,30 +13,45 @@ class ProdukController extends Controller
     {
         try {
 
-            $this->validate($req, ['foto' => 'image|mimes:jpeg,png,jpg,gif|max:2048']);
+            if ($req->file('foto') != null) {
 
-            $prod = (object) ['foto' => ""];
+                $this->validate($req, ['foto' => 'image|mimes:jpeg,png,jpg,gif|max:2048']);
 
-            $original_filename = $req->file('foto')->getClientOriginalName();
-            $original_filename_arr = explode('.', $original_filename);
-            $file_ext = end($original_filename_arr);
-            $destination_path = './upload/produk/';
-            $image = 'C-' . time() . '.' . $file_ext;
+                $prod = (object) ['foto' => ""];
 
-            $req->file('foto')->move($destination_path, $image);
-            $prod->image = '/upload/produk/' . $image;
+                $original_filename = $req->file('foto')->getClientOriginalName();
+                $original_filename_arr = explode('.', $original_filename);
+                $file_ext = end($original_filename_arr);
+                $destination_path = './upload/produk/';
+                $image = 'C-' . time() . '.' . $file_ext;
 
-            $produk = Produk::create([
-                'nama_produk' => $req->input('nama_produk'),
-                'kode_produk' => $req->input('kode_produk'),
-                'kategori_id' => $req->input('kategori_id'),
-                'satuan' => $req->input('satuan'),
-                'harga' => $req->input('harga'),
-                'qty' => $req->input('qty'),
-                'status' => $req->input('status'),
-                'deskripsi_produk' => $req->input('deskripsi_produk'),
-                'foto' => $prod->image
-            ]);
+                $req->file('foto')->move($destination_path, $image);
+                $prod->image = '/upload/produk/' . $image;
+
+                $produk = Produk::create([
+                    'nama_produk' => $req->input('nama_produk'),
+                    'kode_produk' => $req->input('kode_produk'),
+                    'kategori_id' => $req->input('kategori_id'),
+                    'satuan' => $req->input('satuan'),
+                    'harga' => $req->input('harga'),
+                    'qty' => $req->input('qty'),
+                    'status' => $req->input('status'),
+                    'deskripsi_produk' => $req->input('deskripsi_produk'),
+                    'foto' => $prod->image
+                ]);
+            } else {
+
+                $produk = Produk::create([
+                    'nama_produk' => $req->input('nama_produk'),
+                    'kode_produk' => $req->input('kode_produk'),
+                    'kategori_id' => $req->input('kategori_id'),
+                    'satuan' => $req->input('satuan'),
+                    'harga' => $req->input('harga'),
+                    'qty' => $req->input('qty'),
+                    'status' => $req->input('status'),
+                    'deskripsi_produk' => $req->input('deskripsi_produk')
+                ]);
+            }
 
             return response()->json([
                 'success' => true,
@@ -75,30 +90,42 @@ class ProdukController extends Controller
     public function update(Request $req, $id)
     {
         try {
+            if ($req->file('foto') != null) {
+                $this->validate($req, ['foto' => 'image|mimes:jpeg,png,jpg,gif|max:2048']);
 
-            $this->validate($req, ['foto' => 'image|mimes:jpeg,png,jpg,gif|max:2048']);
+                $prod = (object) ['foto' => ""];
 
-            $prod = (object) ['foto' => ""];
+                $original_filename = $req->file('foto')->getClientOriginalName();
+                $original_filename_arr = explode('.', $original_filename);
+                $file_ext = end($original_filename_arr);
+                $destination_path = './upload/produk/';
+                $image = 'C-' . time() . '.' . $file_ext;
 
-            $original_filename = $req->file('foto')->getClientOriginalName();
-            $original_filename_arr = explode('.', $original_filename);
-            $file_ext = end($original_filename_arr);
-            $destination_path = './upload/produk/';
-            $image = 'C-' . time() . '.' . $file_ext;
+                $req->file('foto')->move($destination_path, $image);
+                $prod->image = '/upload/produk/' . $image;
 
-            $req->file('foto')->move($destination_path, $image);
-            $prod->image = '/upload/produk/' . $image;
+                Produk::whereId($id)->update([
+                    'nama_produk' => $req->input('nama_produk'),
+                    'kategori_id' => $req->input('kategori_id'),
+                    'satuan' => $req->input('satuan'),
+                    'harga' => $req->input('harga'),
+                    'qty' => $req->input('qty'),
+                    'status' => $req->input('status'),
+                    'deskripsi_produk' => $req->input('deskripsi_produk'),
+                    'foto' => $prod->image
+                ]);
+            } else {
 
-            Produk::whereId($id)->update([
-                'nama_produk' => $req->input('nama_produk'),
-                'kategori_id' => $req->input('kategori_id'),
-                'satuan' => $req->input('satuan'),
-                'harga' => $req->input('harga'),
-                'qty' => $req->input('qty'),
-                'status' => $req->input('status'),
-                'deskripsi_produk' => $req->input('deskripsi_produk'),
-                'foto' => $prod->image
-            ]);
+                Produk::whereId($id)->update([
+                    'nama_produk' => $req->input('nama_produk'),
+                    'kategori_id' => $req->input('kategori_id'),
+                    'satuan' => $req->input('satuan'),
+                    'harga' => $req->input('harga'),
+                    'qty' => $req->input('qty'),
+                    'status' => $req->input('status'),
+                    'deskripsi_produk' => $req->input('deskripsi_produk'),
+                ]);
+            }
 
             $produk = Produk::whereId($id)->first();
 
