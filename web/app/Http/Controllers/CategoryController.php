@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
@@ -31,7 +32,11 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        $data = [
+            'title' => 'Buat Kategori Baru',
+        ];
+
+        return view('pages.admin.kategori.create', $data);
     }
 
     /**
@@ -42,7 +47,25 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'kode_kategori' => 'required',
+            'nama_kategori' => 'required',
+            'deskripsi_kategori' => 'nullable',
+            'status' => 'nullable',
+            'foto' => 'nullable',
+        ]);
+
+        // dd($validated);
+
+        $res = Http::withToken(session('token'))->post('http://localhost:8005/kategori', $validated);
+
+        // dd($res->json());
+
+        // if (!$res->json()['success']) {
+        //     return back()->with('error', 'Gagal membuat kategori');
+        // }
+
+        // return redirect()->route('admin.categories.index')->with('success', 'Berhasil membuat kategori');
     }
 
     /**
@@ -87,6 +110,12 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $res = Http::withToken(session('token'))->put('http://localhost:8005/kategori/delete/' . $id);
+
+            return back()->with('success', 'Sukses menghapus kategori');
+        } catch (Exception $err) {
+            return back()->with('error', 'Gagal menghapus kategori');
+        }
     }
 }
