@@ -3,7 +3,7 @@
 @section('content')
     <h3>{{ $title }}</h3>
 
-    <div x-data="{ deleteConfirm: false, id: null }" class="table-kategori h-full flex">
+    <div x-data="{ deleteConfirm: false, id: null, name: null }" class="table-kategori h-full flex">
         @if ($categories->count() === 0)
             <div class="maaf bg-white p-5 flex-1 flex flex-col items-center justify-center">
                 <h3>Kategori Masih Kosong</h3>
@@ -60,7 +60,7 @@
                                 <td class="p-3 dark:text-white">
                                     <button class="bg-red-400 text-white p-3 hover:bg-red-600"
                                         class="bg-red-400 text-white p-3 hover:bg-red-600"
-                                        @click="deleteConfirm = true; id = {{ $item['id'] }}">delete</button>
+                                        @click="deleteConfirm = true; id = {{ $item['id'] }}; name = `{{ $item['nama_kategori'] }}`">delete</button>
                                 </td>
                             </tr>
                         @endforeach
@@ -92,7 +92,7 @@
                 <!-- content -->
                 <form action="{{ route('admin.categories.destroy', ['category' => $item['id']]) }}">
                     @csrf @method('delete')
-                    <p class="mt-4 mb-3">Kategori <span x-text="id"></span> akan dihapus. Boleh?</p>
+                    <p class="mt-4 mb-3">Kategori <span x-text="name"></span> akan dihapus. Boleh?</p>
 
                     <div class="flex w-full gap-5 *:flex-1">
                         <button type="button" class="p-3" @click="deleteConfirm = false">Tidak</button>
